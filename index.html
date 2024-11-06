@@ -183,10 +183,6 @@
             background-color: #00E0B5;
             color: #000000;
         }
-        .sidebar li.active {
-            background-color: #47B5FF;
-            color: #000000;
-        }
     </style>
     <script>
         let currentSection = null;
@@ -200,6 +196,8 @@
             currentSection = section;
             document.querySelector('.full-code').style.display = 'none';
             document.querySelector('.sample-image img').src = 'https://via.placeholder.com/300x200.png?text=Select+a+Code+Language';
+            document.querySelector('.topic-intro').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'flex';
         }
 
         function showCode(language) {
@@ -338,6 +336,12 @@ spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolo
                     button.classList.remove('active');
                 }, 1000);
             });
+        }
+
+        // Set landing page view
+        window.onload = function() {
+            document.querySelector('.topic-intro').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'none';
         }
     </script>
 </head>
