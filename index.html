@@ -142,6 +142,20 @@
             object-fit: cover;
             border-radius: 10px;
         }
+
+
+        .custom-button {
+            background-color: #47B5FF;
+            font-size: 18px; /* Adjust as needed */
+            padding: 12px 24px; /* Increase size by adjusting padding */
+            border: none;
+            border-radius: 5px; /* Optional: round the edges */
+            cursor: pointer;
+            color: white;
+
+        }
+
+        
     </style>
     <script>
         let currentSection = '';
@@ -220,7 +234,9 @@ print(admin)`;
         <div>
             <h1>Welcome to the Code Library</h1>
             <p>This is a comprehensive collection of code snippets and resources for working with GIS data, including shapefile manipulation, vector analysis, and data cleaning. Select a section from the menu to get started.</p>
-            <button onclick="hideOverviewPage()">Go to Code Library</button>
+
+            <button onclick="hideOverviewPage()" class="custom-button">Go to Code Library</button>
+
         </div>
     </div>
 
