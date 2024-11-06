@@ -197,11 +197,7 @@
             // Toggle dropdown visibility
             const dropdown = item.querySelector('.dropdown-content');
             if (dropdown) {
-                const isVisible = dropdown.style.display === 'block';
-                document.querySelectorAll('.dropdown-content').forEach(el => el.style.display = 'none');
-                dropdown.style.display = isVisible ? 'none' : 'block';
-            } else {
-                document.querySelectorAll('.dropdown-content').forEach(el => el.style.display = 'none');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
             }
 
             // Update URL hash
@@ -362,7 +358,7 @@ spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolo
     <div class="sidebar">
         <h2>Code Library</h2>
         <ul>
-            <li onclick="selectSidebarItem(this, 'shapefile-info')">
+            <li>
                 A.1 Shapefiles
                 <ul class="dropdown-content">
                     <li onclick="selectSidebarItem(this, 'shapefile-info')">Shapefile Info</li>
@@ -370,7 +366,7 @@ spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolo
                     <li onclick="selectSidebarItem(this, 'admin-unit-overlay')">Admin Unit Overlay</li>
                 </ul>
             </li>
-            <li onclick="selectSidebarItem(this, 'health-info')">
+            <li>
                 A.2 Health Facilities
                 <ul class="dropdown-content">
                     <li onclick="selectSidebarItem(this, 'health-info')">R</li>
@@ -378,7 +374,7 @@ spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolo
                     <li onclick="selectSidebarItem(this, 'health-info')">Stata</li>
                 </ul>
             </li>
-            <li onclick="selectSidebarItem(this, 'routine-case-data')">
+            <li>
                 A.3 Routine Case Data from DHIS2
                 <ul class="dropdown-content">
                     <li onclick="selectSidebarItem(this, 'routine-case-data')">R</li>
