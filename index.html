@@ -22,15 +22,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .overview h1 {
             color: #47B5FF;
             font-size: 2.5em;
         }
-        .overview p {
+        .overview h2, .overview h3 {
+            margin-top: 15px;
             color: #ffffff;
-            font-size: 1.2em;
+        }
+        .overview p {
+            font-size: 1.1em;
+            line-height: 1.6;
         }
         .sidebar {
             width: 15%;
@@ -81,6 +87,7 @@
             padding: 20px;
             overflow-y: auto;
             margin-left: 20%;
+            background-color: #1e1e2e;
         }
         .section-buttons {
             align-self: flex-start;
@@ -142,34 +149,27 @@
             object-fit: cover;
             border-radius: 10px;
         }
-
-
         .custom-button {
             background-color: #47B5FF;
-            font-size: 18px; /* Adjust as needed */
-            padding: 12px 24px; /* Increase size by adjusting padding */
+            font-size: 18px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px; /* Optional: round the edges */
+            border-radius: 5px;
             cursor: pointer;
             color: white;
             position: absolute;
-            top: 10px; /* Adjust the top distance */
-            right: 10px; /* Adjust the right distance */
+            top: 10px;
+            right: 10px;
         }
-
-        
     </style>
     <script>
         let currentSection = '';
         let currentLanguage = '';
-        let showOverview = true;
 
-        // Toggle dropdown on click, prevent closing when clicking inside
         function toggleDropdown(item) {
             item.classList.toggle('open');
         }
 
-        // Prevent dropdown from collapsing when clicking on a submenu item
         function selectSidebarItem(event, item, section) {
             event.stopPropagation();
             document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
@@ -214,14 +214,12 @@ print(admin)`;
         }
 
         function showOverviewPage() {
-            showOverview = true;
             document.querySelector('.overview').style.display = 'flex';
             document.querySelector('.sidebar').style.display = 'none';
             document.querySelector('.content').style.display = 'none';
         }
 
         function hideOverviewPage() {
-            showOverview = false;
             document.querySelector('.overview').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'flex';
             document.querySelector('.content').style.display = 'flex';
@@ -235,29 +233,19 @@ print(admin)`;
     <div class="overview">
         <div>
             <h1>Welcome to the Code Library</h1>
-            <h3 class="sidebar-title">Version: 3 October 2024 </h3>
-            <h3 class="sidebar-title">Authors: Mohamed Sillah Kanu, Sammy Oppong, Jaline Gerardin </h3>
+            <h3>Version: 3 October 2024</h3>
+            <h3>Authors: Mohamed Sillah Kanu, Sammy Oppong, Jaline Gerardin</h3>
             <h2>Overview</h2>
             <h3>Motivation</h3>
-            <p>SNT is here to stay: many NMCPs have found it useful and are continuing to embrace it and further develop it for their analytical needs. Since 2019, multiple individuals have supported the analysis portions of SNT. In most cases, individuals have built their own code in a variety of languages (Stata, R, and Python), sometimes building on others’ previous code and sometimes re-developed independently.
-           
-As SNT matures, more quality assurance is needed such that NMCPs can be confident that the analysis they use to inform their decisions is of high quality regardless of the individual supporting analyst. The continued rollout of SNT also means that analysis can become more efficient if analysts are better able to build on each other’s work rather than tempted to reinvent what has already been developed. Lastly, SNT analysis can become much more accessible if there is a common resource available to help those with intermediate coding skills quickly access the collective knowledge of the SNT analyst community.
-.</p>
-
+            <p>SNT is here to stay: many NMCPs have found it useful and are continuing to embrace it and further develop it for their analytical needs...</p>
             <h3>Objectives</h3>
-            <p>We will build a code library for SNT analysis to:
-            <p>1. Improve quality and reproducibility of SNT analysis by ensuring that analysts are using similar, correct approaches.</p>
-            <p>2. Improve efficiency of SNT analysis by minimizing duplication of effort.</p>
-            <p>3. Promote accessibility of SNT analysis by lowering barriers to entry.</p>
-
-
-            <h3>Target audience</h3>
-            <p>Anyone doing this kind of work. We assume some basic knowledge of R, some understanding of the data, and a strong connection to the NMCP.</p>
-
-            <h3>Scope</h3>
-            <p>All analysis steps of SNT up to but not including mathematical modeling; some related analysis.</p>
+            <p>We will build a code library for SNT analysis to:</p>
+            <ul>
+                <li>Improve quality and reproducibility of SNT analysis.</li>
+                <li>Improve efficiency of SNT analysis.</li>
+                <li>Promote accessibility of SNT analysis.</li>
+            </ul>
             <button onclick="hideOverviewPage()" class="custom-button">Go to sections of the code library</button>
-
         </div>
     </div>
 
