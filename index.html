@@ -23,10 +23,7 @@
             flex-direction: column;
             gap: 20px;
             overflow-y: auto;
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-        }
-        .sidebar::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+            scrollbar-width: none;
         }
         .sidebar h2 {
             color: #47B5FF;
@@ -41,11 +38,8 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
             position: relative;
-        }
-        .sidebar li:hover {
-            background-color: #3a3b52;
+            user-select: none;
         }
         .sidebar li.active {
             background-color: #47B5FF;
@@ -53,22 +47,13 @@
         }
         .dropdown-content {
             display: none;
-            position: relative;
-            margin-top: 5px;
+            padding-left: 20px;
             background-color: #3a3b52;
-            padding-left: 10px;
             border-radius: 5px;
+            margin-top: 5px;
         }
-        .sidebar li:hover .dropdown-content,
-        .sidebar li.active .dropdown-content {
+        .sidebar li.open .dropdown-content {
             display: block;
-        }
-        .dropdown-content li {
-            padding: 8px;
-            cursor: pointer;
-        }
-        .dropdown-content li:hover {
-            background-color: #474761;
         }
         .content {
             flex-grow: 1;
@@ -76,18 +61,14 @@
             flex-direction: column;
             padding: 20px;
             overflow-y: auto;
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-        }
-        .content::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
         }
         .section-buttons {
-            align-self: flex-end;
+            align-self: flex-start;
             margin-bottom: 20px;
         }
         .section-buttons button {
             padding: 10px;
-            margin-left: 10px;
+            margin-right: 10px;
             background-color: #474761;
             color: #ffffff;
             border: none;
@@ -99,58 +80,33 @@
             background-color: #47B5FF;
             color: #000000;
         }
-        .section-buttons button:hover {
-            background-color: #3a3b52;
-        }
-        .search-bar {
-            margin-bottom: 20px;
-        }
-        .search-bar input {
-            width: 85%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 1em;
-        }
-        .search-bar button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #47B5FF;
+        .topic-intro {
+            background-color: #ffffff;
             color: #000;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        .search-bar button:hover {
-            background-color: #3a3b52;
-            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
         .main-content {
             display: flex;
-            height: calc(100% - 100px);
+            flex-direction: column;
+            gap: 20px;
         }
         .code-section, .image-section {
-            flex: 1;
             background-color: #33334d;
             border-radius: 10px;
             padding: 20px;
             overflow: auto;
-            margin: 10px;
         }
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .code-section h3, .image-section h3 {
+            margin-top: 0;
         }
         .full-code {
             background-color: #ffffff;
             padding: 10px;
             border-radius: 10px;
-            overflow: auto;
-            margin-top: 10px;
             color: #000;
-            display: none;
+            margin-top: 10px;
         }
         .sample-image {
             display: flex;
@@ -166,178 +122,92 @@
             object-fit: cover;
             border-radius: 10px;
         }
-        .copy-btn {
-            padding: 8px;
-            background-color: #47B5FF;
-            color: #000000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .copy-btn:hover {
-            background-color: #3a3b52;
-            color: #ffffff;
-        }
-        .copy-btn.active {
-            background-color: #00E0B5;
-            color: #000000;
-        }
-        .sidebar li.active {
-            background-color: #47B5FF;
-            color: #000000;
-        }
     </style>
     <script>
-        let currentSection = null;
-        function selectSidebarItem(item, section) {
-            // Highlight the selected sidebar item
-            const sidebarItems = document.querySelectorAll('.sidebar li');
-            sidebarItems.forEach(el => el.classList.remove('active'));
+        let currentSection = '';
+        let currentLanguage = '';
+
+        // Toggle dropdown on click, prevent closing when clicking inside
+        function toggleDropdown(item) {
+            item.classList.toggle('open');
+        }
+
+        // Prevent dropdown from collapsing when clicking on a submenu item
+        function selectSidebarItem(event, item, section) {
+            event.stopPropagation();  // Prevent the click event from propagating to the parent
+            document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
             item.classList.add('active');
-            // Update URL hash
-            window.location.hash = `/${section}`;
             currentSection = section;
-            document.querySelector('.full-code').style.display = 'none';
-            document.querySelector('.sample-image img').src = 'https://via.placeholder.com/300x200.png?text=Select+a+Code+Language';
+            updateContent();
         }
 
         function showCode(language) {
-            if (!currentSection) {
-                alert('Please select a section from the sidebar first.');
-                return;
-            }
-            window.location.hash = `/${currentSection}/${language.toLowerCase().replace(' ', '-')}`;
-            
-            const codeSnippets = {
-                "shapefile-info": {
-                    "r-english": `# Load necessary libraries
-library(sf)
-
-# Load shapefile
-admin <- st_read("/path/to/admin.shp")
-
-# Print shapefile info
-print(admin)`,
-
-                    "python-english": `import geopandas as gpd
-
-# Load shapefile
-admin = gpd.read_file("/path/to/admin.shp")
-
-# Print shapefile info
-print(admin.head())`,
-
-                    "stata-english": `* Load shapefile
-shp2dta using "/path/to/admin.shp", database(admin_db) coordinates(admin_coords)
-
-* List shapefile info
-list`},
-                "basic-plot": {
-                    "r-english": `# Load necessary libraries
-library(sf)
-library(ggplot2)
-
-# Load shapefile
-admin <- st_read("/path/to/admin.shp")
-
-# Basic plot
-ggplot() +
-  geom_sf(data = admin, fill = NA, color = "blue")`,
-                    "python-english": `import geopandas as gpd
-import matplotlib.pyplot as plt
-
-# Load shapefile
-admin = gpd.read_file("/path/to/admin.shp")
-
-# Basic plot
-admin.plot()
-plt.show()`,
-                    "stata-english": `* Load shapefile
-shp2dta using "/path/to/admin.shp", database(admin_db) coordinates(admin_coords)
-
-* Basic plot
-spmap using admin_coords, id(_ID)`
-                },
-                "admin-unit-overlay": {
-                    "r-english": `# Load necessary libraries
-library(sf)
-library(ggplot2)
-
-# Load shapefiles
-admin1 <- st_read("/path/to/admin1.shp")
-admin2 <- st_read("/path/to/admin2.shp")
-
-# Ensure both layers have the same CRS
-admin1 <- st_transform(admin1, crs = st_crs(admin2))
-
-# Plot overlays
-ggplot() +
-  geom_sf(data = admin1, fill = NA, color = "blue") +
-  geom_sf(data = admin2, fill = NA, color = "red")`,
-                    "python-english": `import geopandas as gpd
-import matplotlib.pyplot as plt
-
-# Load shapefiles
-admin1 = gpd.read_file("/path/to/admin1.shp")
-admin2 = gpd.read_file("/path/to/admin2.shp")
-
-# Ensure both layers have the same CRS
-admin1 = admin1.to_crs(admin2.crs)
-
-# Plot overlays
-fig, ax = plt.subplots()
-admin1.plot(ax=ax, edgecolor='blue')
-admin2.plot(ax=ax, edgecolor='red')
-plt.title("Overlay of Admin Units")
-plt.show()`,
-                    "stata-english": `* Load shapefiles
-shp2dta using "/path/to/admin1.shp", database(admin1_db) coordinates(admin1_coords)
-shp2dta using "/path/to/admin2.shp", database(admin2_db) coordinates(admin2_coords)
-
-* Merge shapefiles
-drop _all
-use admin1_db, clear
-append using admin2_db
-
-* Plot overlays
-spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolor(red ..)`
-                }
-            };
-
-            const selectedCode = codeSnippets[currentSection]?.[language.toLowerCase().replace(' ', '-')];
-            const codeDisplay = document.querySelector('.full-code');
-            if (selectedCode) {
-                codeDisplay.innerText = selectedCode;
-                codeDisplay.style.display = 'block';
-                // Change the sample image to a relevant example image
-                document.querySelector('.sample-image img').src = `https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/16df021948e18e142e103ee7e9c78ff8311005ef/${currentSection}.png`;
-            } else {
-                codeDisplay.innerText = 'No code available.';
-                codeDisplay.style.display = 'block';
-            }
-
-            // Update active button styling
-            const buttons = document.querySelectorAll('.section-buttons button');
-            buttons.forEach(button => button.classList.remove('active'));
-            const activeButton = document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
+            currentLanguage = language;
+            updateContent();
+            document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
+            document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
         }
 
-        function copyCode(section) {
-            let codeToCopy;
-            if (section === 'code-section') {
-                codeToCopy = document.querySelector('.full-code').innerText;
+        function updateContent() {
+            const topicIntro = document.querySelector('.topic-intro');
+            const codeDisplay = document.querySelector('.full-code');
+            const sampleImage = document.querySelector('.sample-image img');
+
+            // Only show content if both section and language are selected
+            if (!currentSection || !currentLanguage) {
+                topicIntro.innerText = 'Error: Please select both a section and a language.';
+                codeDisplay.innerText = '';
+                sampleImage.src = '';
+                document.querySelector('.code-section').style.display = 'none';
+                document.querySelector('.image-section').style.display = 'none';
+                return;
             }
-            navigator.clipboard.writeText(codeToCopy).then(() => {
-                const button = document.querySelector(`button[onclick="copyCode('${section}')"]`);
-                button.classList.add('active');
-                setTimeout(() => {
-                    button.classList.remove('active');
-                }, 1000);
-            });
+
+            // Show content if both section and language are selected
+            document.querySelector('.code-section').style.display = 'block';
+            document.querySelector('.image-section').style.display = 'block';
+
+            if (currentSection === 'shapefile-info' && currentLanguage === 'R English') {
+                topicIntro.innerText = 'R code to display shapefile info.';
+                codeDisplay.innerText = `
+library(sf)
+admin <- st_read("/path/to/admin.shp")
+print(admin)`;
+                sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/main/shapefile-info.png';
+            } else if (currentSection === 'shapefile-info' && currentLanguage === 'Python English') {
+                topicIntro.innerText = 'Python code to display shapefile info.';
+                codeDisplay.innerText = `
+import geopandas as gpd
+admin = gpd.read_file("/path/to/admin.shp")
+print(admin.head())`;
+                sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/main/shapefile-info.png';
+            } else if (currentSection === 'vector-analysis' && currentLanguage === 'R English') {
+                topicIntro.innerText = 'R code for vector analysis.';
+                codeDisplay.innerText = `
+library(sp)
+coordinates(data) <- ~longitude+latitude
+plot(data)`;
+                sampleImage.src = 'https://via.placeholder.com/300x200.png?text=Vector+Analysis+Example';
+            } else if (currentSection === 'vector-analysis' && currentLanguage === 'Python English') {
+                topicIntro.innerText = 'Python code for vector analysis.';
+                codeDisplay.innerText = `
+import matplotlib.pyplot as plt
+plt.scatter(x_coords, y_coords)
+plt.show()`;
+                sampleImage.src = 'https://via.placeholder.com/300x200.png?text=Vector+Analysis+Example';
+            } else if (currentSection === 'data-cleaning' && currentLanguage === 'R English') {
+                topicIntro.innerText = 'R code for data cleaning.';
+                codeDisplay.innerText = `
+library(dplyr)
+clean_data <- data %>% filter(!is.na(variable))`;
+                sampleImage.src = 'https://via.placeholder.com/300x200.png?text=Data+Cleaning+Example';
+            } else if (currentSection === 'data-cleaning' && currentLanguage === 'Python English') {
+                topicIntro.innerText = 'Python code for data cleaning.';
+                codeDisplay.innerText = `
+import pandas as pd
+clean_data = data.dropna(subset=['variable'])`;
+                sampleImage.src = 'https://via.placeholder.com/300x200.png?text=Data+Cleaning+Example';
+            }
         }
     </script>
 </head>
@@ -345,61 +215,49 @@ spmap using admin1_coords, id(_ID) ocolor(blue ..) || using admin2_coords, ocolo
     <div class="sidebar">
         <h2>Code Library</h2>
         <ul>
-            <li>
+            <li onclick="toggleDropdown(this)">
                 A.1 Shapefiles
                 <ul class="dropdown-content">
-                    <li onclick="selectSidebarItem(this, 'shapefile-info')">Shapefile Info</li>
-                    <li onclick="selectSidebarItem(this, 'basic-plot')">Basic Plot</li>
-                    <li onclick="selectSidebarItem(this, 'admin-unit-overlay')">Admin Unit Overlay</li>
+                    <li onclick="selectSidebarItem(event, this, 'shapefile-info')">Shapefile Info</li>
+                    <li onclick="selectSidebarItem(event, this, 'shapefile-merge')">Shapefile Merge</li>
+                    <li onclick="selectSidebarItem(event, this, 'shapefile-conversion')">Shapefile Conversion</li>
                 </ul>
             </li>
-            <li>
-                A.2 Health Facilities
+            <li onclick="toggleDropdown(this)">
+                A.2 Vector Analysis
                 <ul class="dropdown-content">
-                    <li onclick="selectSidebarItem(this, 'health-info')">R</li>
-                    <li onclick="selectSidebarItem(this, 'health-info')">Python</li>
-                    <li onclick="selectSidebarItem(this, 'health-info')">Stata</li>
+                    <li onclick="selectSidebarItem(event, this, 'vector-analysis')">Vector Analysis</li>
+                    <li onclick="selectSidebarItem(event, this, 'buffer-analysis')">Buffer Analysis</li>
+                    <li onclick="selectSidebarItem(event, this, 'overlay-analysis')">Overlay Analysis</li>
                 </ul>
             </li>
-            <li>
-                A.3 Routine Case Data from DHIS2
+            <li onclick="toggleDropdown(this)">
+                A.3 Data Cleaning
                 <ul class="dropdown-content">
-                    <li onclick="selectSidebarItem(this, 'routine-case-data')">R</li>
-                    <li onclick="selectSidebarItem(this, 'routine-case-data')">Python</li>
-                    <li onclick="selectSidebarItem(this, 'routine-case-data')">Stata</li>
+                    <li onclick="selectSidebarItem(event, this, 'data-cleaning')">Data Cleaning</li>
+                    <li onclick="selectSidebarItem(event, this, 'remove-duplicates')">Remove Duplicates</li>
+                    <li onclick="selectSidebarItem(event, this, 'normalize-data')">Normalize Data</li>
                 </ul>
             </li>
         </ul>
     </div>
     <div class="content">
         <div class="section-buttons">
-            <button onclick="showCode('R English')" id="r-english-btn">R English</button>
-            <button onclick="showCode('R French')" id="r-french-btn">R French</button>
-            <button onclick="showCode('Python English')" id="python-english-btn">Python English</button>
-            <button onclick="showCode('Python French')" id="python-french-btn">Python French</button>
-            <button onclick="showCode('Stata English')" id="stata-english-btn">Stata English</button>
-            <button onclick="showCode('Stata French')" id="stata-french-btn">Stata French</button>
+            <button id="r-english-btn" onclick="showCode('R English')">R English</button>
+            <button id="python-english-btn" onclick="showCode('Python English')">Python English</button>
         </div>
-        <div class="topic-intro" style="background-color: #ffffff; color: #000; padding: 20px; border-radius: 10px;">
-            <p style="font-style: italic;">Welcome to the Code Library UI. Here you will find various examples of code snippets related to geospatial analysis, data visualization, and more. For further reading, please check out the following links:</p>
-            <ul>
-                <li><a href="https://en.wikipedia.org/wiki/Shapefile" target="_blank" style="color: #47B5FF;">Shapefile - Wikipedia</a></li>
-                <li><a href="https://geopandas.org/" target="_blank" style="color: #47B5FF;">Geopandas Documentation</a></li>
-                <li><a href="https://ggplot2.tidyverse.org/" target="_blank" style="color: #47B5FF;">ggplot2 Documentation</a></li>
-            </ul>
+        <div class="topic-intro">
+            <p>Select a section and a language to display code and sample image.</p>
         </div>
         <div class="main-content">
             <div class="code-section">
-                <div class="code-header">
-                    <h3>Code</h3>
-                    <button class="copy-btn" onclick="copyCode('code-section')">Copy</button>
-                </div>
-                <pre class="full-code" style="background-color: #ffffff; color: #000;">No code selected.</pre>
+                <h3>Code</h3>
+                <pre class="full-code"></pre>
             </div>
             <div class="image-section">
                 <h3>Sample Image</h3>
                 <div class="sample-image">
-                    <img src="https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/16df021948e18e142e103ee7e9c78ff8311005ef/overlay%20final3.png" alt="Sample Image">
+                    <img src="" alt="Sample Image">
                 </div>
             </div>
         </div>
