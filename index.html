@@ -257,7 +257,7 @@ print(gdf)
 # - 'print(gdf)' print only a portion of the spatial object by default.`;
                 sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
             }
-        }   elif (currentSection === 'shapefiles_info' && currentLanguage === 'R Python') {
+        }   elif (currentSection === 'shapefiles_info' && currentLanguage === 'R French') {
                 topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets. It involves loading and inspecting the spatial features and attributes to understand the structure and details of the data.'; 
                 codeDisplay.innerText = `
 
@@ -310,36 +310,7 @@ print(gdf)
 # - 'print(gdf)' print only a portion of the spatial object by default.`;
                 sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
             }
-        } elif (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
-    topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets. It involves loading and inspecting the spatial features and attributes to understand the structure and details of the data.'; 
-    codeDisplay.innerText = `
-# Step 1: Install necessary libraries
-install.packages("sf")
-
-# Step 2: Import necessary libraries
-library(sf)
-
-# Step 3: Define the path to the shapefile components
-shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
-shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
-shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
-
-# Step 3.1: Download the shapefile components
-download.file(shapefile_path, destfile = "Chiefdom_2021.shp")
-download.file(shapefile_shx, destfile = "Chiefdom_2021.shx")
-download.file(shapefile_dbf, destfile = "Chiefdom_2021.dbf")
-
-# Step 4: Load shapefile data into an sf object
-gdf <- st_read("Chiefdom_2021.shp")
-
-# Step 4.1: Set the Coordinate Reference System (CRS)
-st_crs(gdf) <- 4326
-
-# Step 5: View the first few rows of the sf object
-print(gdf)
-`;
-    sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
-}
+        } 
 
 
 
