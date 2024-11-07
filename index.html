@@ -254,42 +254,10 @@ st_crs(gdf) <- 4326
 print(gdf)
 
 # Explanation:
-# - 'print(gdf)' prints only a portion of the spatial object by default.
-    `;
-    sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
-} else if (currentSection === 'shapefiles_info' && currentLanguage === 'R French') {
-    topicIntro.innerText = 'La visualisation des données de shapefile est souvent la première étape lors de la manipulation des jeux de données spatiaux. Elle consiste à charger et à inspecter les caractéristiques spatiales et les attributs pour comprendre la structure et les détails des données.'; 
-    codeDisplay.innerText = `
-# Étape 1 : Installer les bibliothèques nécessaires
-install.packages("sf")
-
-# Étape 2 : Importer les bibliothèques nécessaires
-library(sf)
-
-# Étape 3 : Définir le chemin vers les composants du shapefile
-shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
-shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
-shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
-
-# Étape 3.1 : Télécharger les composants du shapefile
-download.file(shapefile_path, destfile = "Chiefdom_2021.shp")
-download.file(shapefile_shx, destfile = "Chiefdom_2021.shx")
-download.file(shapefile_dbf, destfile = "Chiefdom_2021.dbf")
-
-# Étape 4 : Charger les données du shapefile dans un objet sf
-gdf <- st_read("Chiefdom_2021.shp")
-
-# Étape 4.1 : Définir le système de coordonnées de référence (CRS)
-st_crs(gdf) <- 4326
-
-# Étape 5 : Afficher les premières lignes de l'objet sf
-print(gdf)
-
-# Explication :
-# - 'print(gdf)' affiche par défaut seulement une partie de l'objet spatial.
-    `;
-    sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
-}
+# - 'print(gdf)' print only a portion of the spatial object by default.`;
+                sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/main/shapefile-info.png';
+            }
+        }
 
 
 
