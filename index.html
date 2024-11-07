@@ -204,7 +204,8 @@
 
             // Sample content
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
-                topicIntro.innerText = 'R code to display shapefile info.';
+                topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets. It involves loading
+            and inspecting the spatial features and attributes to understand the structure and details of the data.'; 
                 codeDisplay.innerText = `
 # Step 1: Install necessary libraries
 install.packages("sf")
@@ -253,7 +254,7 @@ print(gdf)
 
 # Explanation:
 # - 'print(gdf)' print only a portion of the spatial object by default.`;
-                sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-CODE-LIBRARY-NU/main/shapefile-info.png';
+                sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
             }
         }
 
