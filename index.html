@@ -253,106 +253,57 @@ st_crs(gdf) <- 4326
 print(gdf)
 
 # Explanation:
-# - 'print(gdf)' print only a portion of the spatial object by default`;
-                sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
-            
+# - 'print(gdf)' displays the first few rows of the sf object, allowing you to inspect the data and verify it was loaded correctly.
+                `;
+                sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/main/shapefiles_info.jpg';
+            } else {
+                topicIntro.innerText = 'Error: Content not found.';
+                codeDisplay.innerText = '';
+                sampleImage.src = '';
+            }
         }
-
-        function showOverviewPage() {
-            document.querySelector('.overview').style.display = 'flex';
-            document.querySelector('.sidebar').style.display = 'none';
-            document.querySelector('.content').style.display = 'none';
-        }
-
-        function hideOverviewPage() {
-            document.querySelector('.overview').style.display = 'none';
-            document.querySelector('.sidebar').style.display = 'flex';
-            document.querySelector('.content').style.display = 'flex';
-        }
-
-        window.onload = showOverviewPage;
     </script>
 </head>
 <body>
-    <!-- Overview Page -->
-    <div class="overview">
-        <div>
-            <h1>Code library for stratification and SNT</h1>
-            <h3>Version: 6 November 2024</h3>
-            <h3>Authors: Mohamed Sillah Kanu, Sammy Oppong, Jaline Gerardin</h3>
-            <h2>Overview</h2>
-            <h3>Motivation</h3>
-            <p>SNT is here to stay: many NMCPs have found it useful and are continuing to embrace it and further develop it for their analytical needs. Since 2019, multiple individuals have supported the analysis portions of SNT. In most cases, individuals have built their own code in a variety of languages (Stata, R, and Python), sometimes building on others’ previous code and sometimes re-developed independently.
-           
-As SNT matures, more quality assurance is needed such that NMCPs can be confident that the analysis they use to inform their decisions is of high quality regardless of the individual supporting analyst. The continued rollout of SNT also means that analysis can become more efficient if analysts are better able to build on each other’s work rather than tempted to reinvent what has already been developed. Lastly, SNT analysis can become much more accessible if there is a common resource available to help those with intermediate coding skills quickly access the collective knowledge of the SNT analyst community.
-.</p>
-
-            <h3>Objectives</h3>
-            <p>We will build a code library for SNT analysis to:
-            <p>1. Improve quality and reproducibility of SNT analysis by ensuring that analysts are using similar, correct approaches.</p>
-            <p>2. Improve efficiency of SNT analysis by minimizing duplication of effort.</p>
-            <p>3. Promote accessibility of SNT analysis by lowering barriers to entry.</p>
-
-
-            <h3>Target audience</h3>
-            <p>Anyone doing this kind of work. We assume some basic knowledge of R, some understanding of the data, and a strong connection to the NMCP.</p>
-
-            <h3>Scope</h3>
-            <p>All analysis steps of SNT up to but not including mathematical modeling; some related analysis.</p>
-            </ul>
-            <button onclick="hideOverviewPage()" class="custom-button">Go to code library</button>
-        </div>
-    </div>
-
-    <!-- Sidebar Menu -->
-    <div class="sidebar" style="display:none;">
-        <h2>Code Library</h2>
+    <div class="sidebar">
+        <h2>Sections</h2>
         <ul>
             <li onclick="toggleDropdown(this)">
-                A.1 Shapefiles
-                <ul class="dropdown-content">
-                    <li onclick="selectSidebarItem(event, this, 'shapefiles_info')">View Shapefile Data</li>
-                    <li onclick="selectSidebarItem(event, this, 'basic_plot')">Basic Plotting</li>
-                    <li onclick="selectSidebarItem(event, this, 'admin_units')">Admin Units Overlay</li>
-                    <li onclick="selectSidebarItem(event, this, 'merge_excel')">Merge shapefile with excel</li>
-                    <li onclick="selectSidebarItem(event, this, 'map_numeric')">Map by numeric variable</li>
-                    <li onclick="selectSidebarItem(event, this, 'map_categorical')">Map by categorical variable</li>
-                    <li onclick="selectSidebarItem(event, this, 'manual_color')">Map with manual color coding</li>
-                    
-                </ul>
+                <span>GIS</span>
+                <div class="dropdown-content">
+                    <ul>
+                        <li onclick="selectSidebarItem(event, this, 'shapefiles_info')">Shapefile Info</li>
+                        <li onclick="selectSidebarItem(event, this, 'coord_crs')">Coordinate Systems</li>
+                    </ul>
+                </div>
             </li>
             <li onclick="toggleDropdown(this)">
-                A.2 Vector Analysis
-                <ul class="dropdown-content">
-                    <li onclick="selectSidebarItem(event, this, 'vector-analysis')">Vector Analysis</li>
-                </ul>
+                <span>Machine Learning</span>
+                <div class="dropdown-content">
+                    <ul>
+                        <li onclick="selectSidebarItem(event, this, 'random_forest')">Random Forest</li>
+                        <li onclick="selectSidebarItem(event, this, 'decision_tree')">Decision Tree</li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>
 
-    <!-- Content -->
-    <div class="content" style="display:none;">
+    <div class="content">
         <div class="section-buttons">
             <button id="r-english-btn" onclick="showCode('R English')">R English</button>
-            <button id="r-french-btn" onclick="showCode('R French')">R French</button>
             <button id="python-english-btn" onclick="showCode('Python English')">Python English</button>
-            <button id="python-french-btn" onclick="showCode('Python French')">Python French</button>
-            <button id="stata-english-btn" onclick="showCode('Stata English')">Stata English</button>
-            <button id="stata-french-btn" onclick="showCode('Stata French')">Stata French</button>
-            
-        </div>
-        <div class="topic-intro">
-            <p>Select a section and a language to display code and sample image.</p>
         </div>
         <div class="main-content">
+            <div class="topic-intro">Please select a section and language.</div>
             <div class="code-section">
-                <h3>Code</h3>
+                <h3>Code Section</h3>
                 <pre class="full-code"></pre>
             </div>
             <div class="image-section">
                 <h3>Sample Image</h3>
                 <div class="sample-image">
-                    <img src="" alt="Sample Image">
+                    <img src="" alt="Sample Image" />
                 </div>
             </div>
         </div>
