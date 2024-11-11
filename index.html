@@ -386,22 +386,80 @@ ggplot() +
 # - 'ggtitle()' adds a title and centers it for better visual presentation.`;
     sampleImage.src = 'https://raw.githubusercontent.com/numalariamodeling/snt-code-library-english-version/b1eb6edf32dad556c200b2823204e1689f77155b/adminUnits.png';
 } else if (currentSection === 'merge_excel' && currentLanguage === 'R English') {
-    topicIntro.innerText = 'QGIS provides a';
+    topicIntro.innerText = 'Merging a shapefile with Excel involves combining spatial data with attribute data from a spreadsheet. This enriches the spatial data with additional non-spatial attributes, making the visualization more informative';
     codeDisplay.innerText = `
 
-# Step 1: Open QGIS and load shapefile
-# Step 2: Go to Layer > Add Layer > Add Vector Layer
-# Step 3: Select the shapefile you want to load
+# Step 1: Install necessary libraries
+install.packages("sf")          # Install 'sf' for spatial data handling
+install.packages("readxl")      # Install 'readxl' for reading Excel files
+install.packages("dplyr")       # Install 'dplyr' for data manipulation
+
+# Step 2: Import necessary libraries
+library(sf)          # Load 'sf' package for geospatial data manipulation
+library(readxl)      # Load 'readxl' package for reading Excel files
+library(dplyr)       # Load 'dplyr' for data manipulation
+
+# Step 3: Define URLs to shapefile components for 'Chiefdom 2021'
+chiefdom_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
+chiefdom_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
+chiefdom_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
+
+# Step 3.1: Download the shapefile components locally for 'Chiefdom 2021'
+download.file(chiefdom_shapefile_path, destfile = "Chiefdom_2021.shp", mode = "wb")
+download.file(chiefdom_shapefile_shx, destfile = "Chiefdom_2021.shx", mode = "wb")
+download.file(chiefdom_shapefile_dbf, destfile = "Chiefdom_2021.dbf", mode = "wb")
+
+# Step 4: Load the shapefile into an sf object
+adm3 <- st_read("Chiefdom_2021.shp")
+
+# Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
+st_crs(adm3) <- 4326  # Set CRS to WGS84
+
+# Step 6: Read the Excel file that contains additional attribute data
+# Define the raw URL for the Excel file
+excel_file_url <- "https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/0912c6f41ef3256396c145781450286a91147554/Chiefdom_data.xlsx"
+
+# Step 6.1: Download the Excel file to the local directory
+download.file(excel_file_url, destfile = "Chiefdom_data.xlsx", mode = "wb")
+
+# Step 6.2: Load Excel data into R
+excel_data <- read_excel("Chiefdom_data.xlsx")
 
 # Explanation:
-# - Adding a shapefile layer allows you to visualize spatial data within QGIS.
+# - 'download.file()' downloads the Excel file from the raw GitHub URL and saves it locally.
+# - 'read_excel()' reads the downloaded Excel file into an R data frame.
+# - Ensure the Excel data has a common key column (e.g., 'adm3_id') to merge with the shapefile.
 
-# Step 4: Style the layer
-# - Right-click on the layer, select Properties, and choose the Symbology tab.
+# Step 7: Perform the merge operation and validate 1:1 relationship
+# Ensure that both adm3 and excel_data have a common column named 'adm3_id'
+merged_data <- merge(adm3, excel_data, by = "FIRST_CHIE", all = FALSE)
+
+# Validate 1:1 Merge:
+# Identify rows that did not merge (in both adm3 and excel_data)
+unmatched_adm3 <- anti_join(adm3, excel_data, by = "FIRST_CHIE")  # Rows in 'adm3' not in 'excel_data'
+unmatched_excel <- anti_join(excel_data, adm3, by = "FIRST_CHIE") # Rows in 'excel_data' not in 'adm3'
+
+# Print the non-matching rows
+print("Rows in the shapefile (adm3) that did not merge:")
+print(unmatched_adm3)
+
+print("Rows in the Excel data that did not merge:")
+print(unmatched_excel)
 
 # Explanation:
-# - Here you can change colors, add labels, and adjust styling based on data attributes.`;
-    sampleImage.src = 'https://example.com/path/to/qgis_example.png';
+# - 'anti_join(adm3, excel_data, by = "FIRST_CHIE")' finds rows in 'adm3' that do not have a matching row in 'excel_data'.
+# - 'anti_join(excel_data, adm3, by = "FIRST_CHIE")' finds rows in 'excel_data' that do not have a matching row in 'adm3'.
+# - The print statements display the rows that were not matched during the merge process.
+
+# Step 8: Print the merged data to inspect the result
+print("Merged Data:")
+print(merged_data)
+
+# Explanation:
+# - 'print(merged_data)' will display the contents of the merged sf object in the console.
+# - This allows you to verify that the data merge was successful and to inspect the attributes.`;
+    sampleImage.src = 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/05f17c7e8e997d29e3a5000bc1adab46779554b6/Merge%20with%20excel.png';
+                
 } else if (currentSection === 'map_numeric' && currentLanguage === 'R English') {
     topicIntro.innerText = 'QGIS provides a powerful interface for creating maps and analyzing geospatial data interactively.';
     codeDisplay.innerText = `
