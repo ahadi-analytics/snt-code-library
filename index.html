@@ -257,7 +257,7 @@ print(gdf)
 # - 'print(gdf)' print only a portion of the spatial object by default.`;
                 sampleImage.src = 'https://github.com/mohamedsillahkanu/SNT-Code-Library/raw/31b914c1115de3ccd6c8045946adc4a84eadc4bb/print%20gdf%20in%20R.png';
             } else if (currentSection === 'basic_plot' && currentLanguage === 'R English') {
-    topicIntro.innerText = 'Data analysis in Python is essential for processing, analyzing, and visualizing large datasets effectively.';
+    topicIntro.innerText = 'Basic map plotting involves visualizing geographic data to understand spatial patterns';
     codeDisplay.innerText = `
 
 # Step 1: Install necessary libraries
@@ -324,24 +324,69 @@ ggplot(data = gdf) +
                 
     sampleImage.src = 'https://raw.githubusercontent.com/numalariamodeling/snt-code-library-english-version/bf20a81887a57cedf3f9b13245a3122e8594060a/map%20of%20sl.png';
 } else if (currentSection === 'admin_units' && currentLanguage === 'R English') {
-    topicIntro.innerText = 'QGIS provides a powerful interface for creating maps and analyzing geospatial data interactively.';
+    topicIntro.innerText = 'Administrative unit overlays involve displaying different levels of administrative boundaries on maps, such as country, province, and district boundaries. These overlays help to provide context to spatial analysis';
     codeDisplay.innerText = `
 
-# Step 1: Open QGIS and load shapefile
-# Step 2: Go to Layer > Add Layer > Add Vector Layer
-# Step 3: Select the shapefile you want to load
+# Step 1: Install necessary libraries
+install.packages("sf")       # Install 'sf' for spatial data handling
+install.packages("ggplot2")  # Install 'ggplot2' for advanced plotting
+
+# Step 2: Import necessary libraries
+library(sf)       # Load 'sf' package for geospatial data manipulation
+library(ggplot2)  # Load 'ggplot2' for plotting
+
+# Step 3: Define URLs to shapefile components for adm1 and adm3
+adm1_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM1.shp'
+adm1_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM1.shx'
+adm1_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM1.dbf'
+
+adm3_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.shp'
+adm3_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.shx'
+adm3_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.dbf'
+
+# Step 3.1: Download the shapefile components locally for adm1 and adm3
+# Download adm1 shapefile components
+download.file(adm1_shapefile_path, destfile = "geoBoundaries_BFA_ADM1.shp", mode = "wb")
+download.file(adm1_shapefile_shx, destfile = "geoBoundaries_BFA_ADM1.shx", mode = "wb")
+download.file(adm1_shapefile_dbf, destfile = "geoBoundaries_BFA_ADM1.dbf", mode = "wb")
+
+# Download adm3 shapefile components
+download.file(adm3_shapefile_path, destfile = "geoBoundaries_BFA_ADM3.shp", mode = "wb")
+download.file(adm3_shapefile_shx, destfile = "geoBoundaries_BFA_ADM3.shx", mode = "wb")
+download.file(adm3_shapefile_dbf, destfile = "geoBoundaries_BFA_ADM3.dbf", mode = "wb")
+
+# Step 4: Load shapefiles into sf objects
+adm1 <- st_read("geoBoundaries_BFA_ADM1.shp")   # Reads administrative level 1 shapefile
+adm3 <- st_read("geoBoundaries_BFA_ADM3.shp")   # Reads administrative level 3 shapefile
+
+# Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
+st_crs(adm1) <- 4326  # Set CRS to WGS84 for adm1
+st_crs(adm3) <- 4326  # Set CRS to WGS84 for adm3
 
 # Explanation:
-# - Adding a shapefile layer allows you to visualize spatial data within QGIS.
+# - It is crucial to make sure both spatial layers have the same CRS to overlay them accurately.
 
-# Step 4: Style the layer
-# - Right-click on the layer, select Properties, and choose the Symbology tab.
+# Step 6: Plot the adm1 and adm3 layers together using ggplot2
+ggplot() +
+  geom_sf(data = adm1, fill = NA, color = "#47B5FF", lwd = 1.8) +  # Plot adm1 boundaries in lightblue
+  geom_sf(data = adm3, fill = NA, color = "black", size = 1) +   # Plot adm3 boundaries in black
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),   # Remove grid lines
+    axis.text = element_blank(),    # Remove axis tick labels
+    axis.ticks = element_blank(),   # Remove axis ticks
+    plot.title = element_text(hjust = 0.5, size = 16)  # Center and adjust the title size
+  ) +
+  ggtitle("Overlay of Administrative Units (ADM1 and ADM3)")
 
 # Explanation:
-# - Here you can change colors, add labels, and adjust styling based on data attributes.`;
-    sampleImage.src = 'https://example.com/path/to/qgis_example.png';
+# - 'geom_sf(data = adm1, fill = NA, color = "#47B5FF")' plots the adm1 boundaries in lightblue without filling.
+# - 'geom_sf(data = adm3, fill = NA, color = "black")' plots the adm3 boundaries in black without filling.
+# - 'theme_minimal()' sets a simple theme, and 'theme()' is used to remove unwanted elements like grid lines and axis ticks.
+# - 'ggtitle()' adds a title and centers it for better visual presentation.`;
+    sampleImage.src = 'https://raw.githubusercontent.com/numalariamodeling/snt-code-library-english-version/b1eb6edf32dad556c200b2823204e1689f77155b/adminUnits.png';
 } else if (currentSection === 'merge_excel' && currentLanguage === 'R English') {
-    topicIntro.innerText = 'QGIS provides a powerful interface for creating maps and analyzing geospatial data interactively.';
+    topicIntro.innerText = 'QGIS provides a';
     codeDisplay.innerText = `
 
 # Step 1: Open QGIS and load shapefile
