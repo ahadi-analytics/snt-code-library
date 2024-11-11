@@ -613,18 +613,10 @@ ggplot(data = merged_data) +
     topicIntro.innerText = 'QGIS provides a powerful ';
     codeDisplay.innerText = `
 
-# Step 1: Open QGIS and load shapefile
-# Step 2: Go to Layer > Add Layer > Add Vector Layer
-# Step 3: Select the shapefile you want to load
 
-# Explanation:
-# - Adding a shapefile layer allows you to visualize spatial data within QGIS.
 
-# Step 4: Style the layer
-# - Right-click on the layer, select Properties, and choose the Symbology tab.
 
-# Explanation:
-# - Here you can change colors, add labels, and adjust styling based on data attributes.`;
+                                             `;
     sampleImage.src = 'https://example.com/path/to/qgis_example.png';
 } 
         }
@@ -682,7 +674,7 @@ As SNT matures, more quality assurance is needed such that NMCPs can be confiden
         <h2>Code Library</h2>
         <ul>
             <li onclick="toggleDropdown(this)">
-                A.1 Shapefiles
+                Shapefiles
                 <ul class="dropdown-content">
                     <li onclick="selectSidebarItem(event, this, 'shapefiles_info')">View Shapefile Data</li>
                     <li onclick="selectSidebarItem(event, this, 'basic_plot')">Basic Plotting</li>
