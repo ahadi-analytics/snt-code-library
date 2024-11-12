@@ -203,7 +203,7 @@
                 const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}`;
                 window.history.pushState({}, '', newURL);
             } else if (currentSection === 'overview') {
-                const newURL = 'https://ahadi-analytics.github.io/snt-code-library/?page=overview';
+                const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
                 window.history.pushState({}, '', newURL);
             }
         }
