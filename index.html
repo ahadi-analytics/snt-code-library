@@ -197,8 +197,8 @@
             if (currentSection && currentLanguage) {
                 const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}&lang=${encodeURIComponent(currentLanguage)}`;
                 window.history.pushState({}, '', newURL);
-            } else if (!currentSection && !currentLanguage) {
-                const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
+            } else if (currentSection === 'overview') {
+                const newURL = 'https://ahadi-analytics.github.io/snt-code-library/?page=overview';
                 window.history.pushState({}, '', newURL);
             }
         }
@@ -252,7 +252,7 @@ print(gdf)`;
         }
 
         function showOverviewPage() {
-            currentSection = '';
+            currentSection = 'overview';
             currentLanguage = '';
             updateURL();
             document.querySelector('.overview').style.display = 'flex';
