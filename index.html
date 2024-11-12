@@ -214,8 +214,15 @@
 
         function updateURL(section, language) {
             const url = new URL(window.location);
-            url.searchParams.set('section', section);
-            url.searchParams.set('language', language);
+            if (section === 'overview') {
+                url.pathname = '/snt-code-library/overview';
+                url.searchParams.delete('section');
+                url.searchParams.delete('language');
+            } else {
+                url.pathname = '/snt-code-library/';
+                url.searchParams.set('section', section);
+                url.searchParams.set('language', language);
+            }
             window.history.pushState({}, '', url); // Updates the URL without reloading the page
         }
 
@@ -223,11 +230,16 @@
             const urlParams = new URLSearchParams(window.location.search);
             const section = urlParams.get('section');
             const language = urlParams.get('language');
-            
-            if (section && language) {
-                currentSection = section;
-                currentLanguage = language;
-                loadContent(section, language);
+
+            if (window.location.pathname.endsWith('/overview') || !section) {
+                showOverviewPage();
+            } else {
+                hideOverviewPage();
+                if (section && language) {
+                    currentSection = section;
+                    currentLanguage = language;
+                    loadContent(section, language);
+                }
             }
         });
 
