@@ -212,7 +212,7 @@
             const sampleImage = document.querySelector('.sample-image img');
 
             if (!currentSection || !currentLanguage) {
-                topicIntro.innerText = 'Error: Please select both a section and a language.';
+                topicIntro.innerText = 'Select a section on the sidebar and a language (R English/R French/Python English/Python French/Sta English/Stata French) to display code and sample output';
                 codeDisplay.innerText = '';
                 sampleImage.src = '';
                 document.querySelector('.code-section').style.display = 'none';
@@ -710,7 +710,7 @@ As SNT matures, more quality assurance is needed such that NMCPs can be confiden
     <!-- Sidebar Menu -->
     <div class="sidebar" style="display:none;">
         <h2>Code library for stratification and SNT</h2>
-        <button onclick="showOverviewPage(event, this, 'overview')" style="width: 75%; border: none; cursor: pointer; border-radius: 5px; padding: 10px; font-size: 18px; background-color: #87CEEB; color: white; position: absolute; top: 100px; left: 15px;">
+        <button onclick="showOverviewPage(event, this, 'overview')" style="width: 75%; border: none; cursor: pointer; border-radius: 5px; padding: 10px; font-size: 18px; background-color: #87CEEB; color: white; position: absolute; top: 110px; left: 15px;">
             Go to Homepage
         </button>
         <ul>
@@ -748,7 +748,7 @@ As SNT matures, more quality assurance is needed such that NMCPs can be confiden
             
         </div>
         <div class="topic-intro">
-            <p>Select a section and a language to display code and sample image.</p>
+            <p>Select a section on the sidebar and a language (R English/R French/Python English/Python French/Sta English/Stata French) to display code and sample output.</p>
         </div>
         <div class="main-content">
             <div class="code-section">
