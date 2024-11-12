@@ -197,6 +197,9 @@
             if (currentSection && currentLanguage) {
                 const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}&lang=${encodeURIComponent(currentLanguage)}`;
                 window.history.pushState({}, '', newURL);
+            } else if (!currentSection && !currentLanguage) {
+                const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
+                window.history.pushState({}, '', newURL);
             }
         }
 
@@ -205,8 +208,11 @@
             const codeDisplay = document.querySelector('.full-code');
             const sampleImage = document.querySelector('.sample-image img');
 
-            if (!currentSection) {
+            if (!currentSection || currentSection === 'overview') {
                 topicIntro.innerText = 'Select a section on the sidebar';
+                document.querySelector('.overview').style.display = 'flex';
+                document.querySelector('.sidebar').style.display = 'none';
+                document.querySelector('.content').style.display = 'none';
                 return;
             }
 
@@ -214,6 +220,10 @@
                 topicIntro.innerText = 'Select a code language at the top to display sample code and output';
                 return;
             }
+
+            document.querySelector('.overview').style.display = 'none';
+            document.querySelector('.sidebar').style.display = 'flex';
+            document.querySelector('.content').style.display = 'flex';
 
             // Update content based on section and language selection
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
@@ -242,12 +252,17 @@ print(gdf)`;
         }
 
         function showOverviewPage() {
+            currentSection = '';
+            currentLanguage = '';
+            updateURL();
             document.querySelector('.overview').style.display = 'flex';
             document.querySelector('.sidebar').style.display = 'none';
             document.querySelector('.content').style.display = 'none';
         }
 
         function hideOverviewPage() {
+            currentSection = 'overview';
+            updateURL();
             document.querySelector('.overview').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'flex';
             document.querySelector('.content').style.display = 'flex';
@@ -258,11 +273,18 @@ print(gdf)`;
             const section = params.get('page');
             const language = params.get('lang');
 
-            if (section && language) {
+            if (section) {
                 currentSection = section;
+            }
+            if (language) {
                 currentLanguage = language;
-                document.querySelector(`.sidebar li[onclick*="${section}"]`).classList.add('active');
-                document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+            }
+
+            if (currentSection && currentSection !== 'overview') {
+                document.querySelector(`.sidebar li[onclick*="${currentSection}"]`).classList.add('active');
+                if (currentLanguage) {
+                    document.querySelector(`#${currentLanguage.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+                }
                 hideOverviewPage();
                 updateContent();
             } else {
