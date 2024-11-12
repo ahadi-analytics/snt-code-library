@@ -206,16 +206,20 @@
             document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
             item.classList.add('active');
             currentSection = section;
+            currentLanguage = '';
+            updateURL();
             updateContent();
         }
 
         function showCode(language) {
-            currentLanguage = language;
-            updateContent();
-            document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
-            document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+            if (currentSection && currentSection !== 'overview') {
+                currentLanguage = language;
+                updateURL();
+                updateContent();
+                document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
+                document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+            }
         }
-
 
         function updateURL() {
             if (currentSection && currentSection !== 'overview' && currentLanguage) {
@@ -228,44 +232,29 @@
                 const newURL = 'https://ahadi-analytics.github.io/snt-code-library/?page=overview';
                 window.history.pushState({}, '', newURL);
             }
+        }
 
         function updateContent() {
             const topicIntro = document.querySelector('.topic-intro');
             const codeDisplay = document.querySelector('.full-code');
             const sampleImage = document.querySelector('.sample-image img');
 
-            if (!currentSection) {
+            if (!currentSection || currentSection === 'overview') {
                 topicIntro.innerText = 'Select a section on the sidebar';
-        
+                document.querySelector('.overview').style.display = 'flex';
+                document.querySelector('.sidebar').style.display = 'none';
+                document.querySelector('.content').style.display = 'none';
                 return;
             }
 
             if (!currentLanguage) {
                 topicIntro.innerText = 'Select a code language at the top to display sample code and output';
-        
-                return;                
+                return;
             }
 
-
-        function copyCode(section) {
-            let codeToCopy;
-            if (section === 'code-section') {
-                codeToCopy = document.querySelector('.full-code').innerText;
-            }
-            navigator.clipboard.writeText(codeToCopy).then(() => {
-                const button = document.querySelector(`button[onclick="copyCode('${section}')"]`);
-                button.classList.add('active');
-                setTimeout(() => {
-                    button.classList.remove('active');
-                }, 1000);
-            });
-        }
-
-            
-
-            document.querySelector('.code-section').style.display = 'block';
-            document.querySelector('.image-section').style.display = 'block';
-
+            document.querySelector('.overview').style.display = 'none';
+            document.querySelector('.sidebar').style.display = 'flex';
+            document.querySelector('.content').style.display = 'flex';
      
             // Sample content
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
