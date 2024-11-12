@@ -258,27 +258,39 @@
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
                 topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets. It involves loading and inspecting the spatial features and attributes to understand the structure and details of the data.'; 
                 codeDisplay.innerText = `
-
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 # Step 1: Install necessary libraries
 install.packages("sf")
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 # Step 2: Import necessary libraries
-library(sf)
-
 # Explanation:
 # - sf: Used to work with geospatial data in R.
 
+library(sf)
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 # Step 3: Define the path to the shapefile components
-
-shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
-shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
-shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
-
 # Explanation:
 # - The variables 'shapefile_shx', 'shapefile_dbf', and 'shapefile_path' hold the raw paths to the shapefile components from the GitHub repository.
 # - All three files (.shp, .shx, .dbf) are required to correctly read the shapefile.
 
-# Step 3.1: Download the shapefile components
+shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
+shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
+shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Step 4: Download the shapefile components
 download.file(shapefile_path, destfile = "Chiefdom_2021.shp")
 download.file(shapefile_shx, destfile = "Chiefdom_2021.shx")
 download.file(shapefile_dbf, destfile = "Chiefdom_2021.dbf")
