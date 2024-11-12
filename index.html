@@ -258,6 +258,8 @@
      
             // Sample content
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
+                const pageURL = `${window.location.origin}/?page=shapefiles_info&lang=R_English`;
+                console.log("Page URL:", pageURL);
                 topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets. It involves loading and inspecting the spatial features and attributes to understand the structure and details of the data.'; 
                 codeDisplay.innerText = `
 
