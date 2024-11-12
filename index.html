@@ -687,19 +687,50 @@ ggplot(data = merged_data) +
 
 
 
-        function showOverviewPage() {
+            function showOverviewPage() {
+            currentSection = 'overview';
+            currentLanguage = '';
+            updateURL();
             document.querySelector('.overview').style.display = 'flex';
             document.querySelector('.sidebar').style.display = 'none';
             document.querySelector('.content').style.display = 'none';
         }
 
         function hideOverviewPage() {
+            currentSection = 'overview';
+            currentLanguage = '';
+            updateURL();
             document.querySelector('.overview').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'flex';
             document.querySelector('.content').style.display = 'flex';
         }
 
-        window.onload = showOverviewPage;
+        function handlePageLoad() {
+            const params = new URLSearchParams(window.location.search);
+            const section = params.get('page');
+            const language = params.get('lang');
+
+            if (section) {
+                currentSection = section;
+            }
+            if (language && currentSection !== 'overview') {
+                currentLanguage = language;
+            }
+
+            if (currentSection && currentSection !== 'overview') {
+                document.querySelector(`.sidebar li[onclick*="${currentSection}"]`).classList.add('active');
+                if (currentLanguage) {
+                    document.querySelector(`#${currentLanguage.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+                }
+                hideOverviewPage();
+                updateContent();
+            } else {
+                showOverviewPage();
+            }
+        }
+
+        window.onload = handlePageLoad;
+    </script>
     </script>
 </head>
 <body>
