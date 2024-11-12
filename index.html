@@ -211,13 +211,16 @@
             const codeDisplay = document.querySelector('.full-code');
             const sampleImage = document.querySelector('.sample-image img');
 
-            if (!currentSection || !currentLanguage) {
-                topicIntro.innerText = 'Select a section on the sidebar and a language (R English/R French/Python English/Python French/Sta English/Stata French) to display code and sample output';
-                codeDisplay.innerText = '';
-                sampleImage.src = '';
-                document.querySelector('.code-section').style.display = 'none';
-                document.querySelector('.image-section').style.display = 'none';
+            if (!currentSection) {
+                topicIntro.innerText = 'Select a section on the sidebar';
+        
                 return;
+            }
+
+            if (!currentLanguage) {
+                topicIntro.innerText = 'Select a code language at the top to display sample code and output';
+        
+                return;                
             }
 
 
