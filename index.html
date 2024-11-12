@@ -231,7 +231,10 @@
             const section = urlParams.get('section');
             const language = urlParams.get('language');
 
-            if (window.location.pathname.endsWith('/overview') || !section) {
+            // Redirect base URL to /overview as the landing page
+            if (window.location.pathname === '/snt-code-library/' && !section && !language) {
+                window.location.replace('/snt-code-library/overview');
+            } else if (window.location.pathname.endsWith('/overview') || !section) {
                 showOverviewPage();
             } else {
                 hideOverviewPage();
