@@ -193,60 +193,93 @@
             color: #000000;
         }
     </style>
-    <script>
-        let currentSection = '';
-        let currentLanguage = '';
+ <script>
+    let currentSection = '';
+    let currentLanguage = '';
 
-        function toggleDropdown(item) {
-            item.classList.toggle('open');
-        }
+    function toggleDropdown(item) {
+        item.classList.toggle('open');
+    }
 
-        function selectSidebarItem(event, item, section) {
-            event.stopPropagation();
-            document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
-            item.classList.add('active');
+    function selectSidebarItem(event, item, section) {
+        event.stopPropagation();
+        document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+        currentSection = section;
+        updateContent();
+        updateURL(currentSection, currentLanguage);
+    }
+
+    function showCode(language) {
+        currentLanguage = language;
+        updateContent();
+        document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
+        document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+        updateURL(currentSection, currentLanguage);
+    }
+
+    function updateURL(section, language) {
+        const url = new URL(window.location);
+        url.searchParams.set('section', section);
+        url.searchParams.set('language', language);
+        window.history.pushState({}, '', url); // Updates the URL without reloading the page
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const section = urlParams.get('section');
+        const language = urlParams.get('language');
+        
+        if (section && language) {
             currentSection = section;
-            updateContent();
-        }
-
-        function showCode(language) {
             currentLanguage = language;
-            updateContent();
-            document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
-            document.querySelector(`#${language.toLowerCase().replace(' ', '-')}-btn`).classList.add('active');
+            loadContent(section, language);
+        }
+    });
+
+    function loadContent(section, language) {
+        const topicIntro = document.querySelector('.topic-intro');
+        const codeDisplay = document.querySelector('.full-code');
+
+        if (section === 'shapefiles_info' && language === 'R English') {
+            topicIntro.innerText = 'Viewing shapefile data is often the first step when working with spatial datasets...';
+            codeDisplay.innerText = `// R code sample for viewing shapefile data`;
+            // Add more cases as needed for other sections and languages
+        }
+    }
+
+    function updateContent() {
+        const topicIntro = document.querySelector('.topic-intro');
+        const codeDisplay = document.querySelector('.full-code');
+
+        if (!currentSection) {
+            topicIntro.innerText = 'Select a section on the sidebar';
+            return;
         }
 
-        function updateContent() {
-            const topicIntro = document.querySelector('.topic-intro');
-            const codeDisplay = document.querySelector('.full-code');
-            const sampleImage = document.querySelector('.sample-image img');
-
-            if (!currentSection) {
-                topicIntro.innerText = 'Select a section on the sidebar';
-        
-                return;
-            }
-
-            if (!currentLanguage) {
-                topicIntro.innerText = 'Select a code language at the top to display sample code and output';
-        
-                return;                
-            }
-
-
-        function copyCode(section) {
-            let codeToCopy;
-            if (section === 'code-section') {
-                codeToCopy = document.querySelector('.full-code').innerText;
-            }
-            navigator.clipboard.writeText(codeToCopy).then(() => {
-                const button = document.querySelector(`button[onclick="copyCode('${section}')"]`);
-                button.classList.add('active');
-                setTimeout(() => {
-                    button.classList.remove('active');
-                }, 1000);
-            });
+        if (!currentLanguage) {
+            topicIntro.innerText = 'Select a code language at the top to display sample code and output';
+            return;
         }
+
+        loadContent(currentSection, currentLanguage);
+    }
+
+    function copyCode(section) {
+        let codeToCopy;
+
+        if (section === 'code-section') {
+            codeToCopy = document.querySelector('.full-code').innerText;
+        }
+
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+            const button = document.querySelector(`button[onclick="copyCode('${section}')"]`);
+            button.classList.add('active');
+            setTimeout(() => {
+                button.classList.remove('active');
+            }, 1000);
+        });
+    }
 
             
 
