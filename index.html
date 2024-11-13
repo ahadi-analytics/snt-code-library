@@ -225,6 +225,10 @@
                 topicIntro.innerText = 'Select a code language at the top to display sample code and output';
                 return;
             }
+             if (!currentSection) {
+                topicIntro.innerText = 'Select a code language at the top to display sample code and output';
+                return;
+            }
 
             document.querySelector('.overview').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'flex';
