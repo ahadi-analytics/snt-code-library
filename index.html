@@ -233,6 +233,29 @@
             document.querySelector('.overview').style.display = 'none';
             document.querySelector('.sidebar').style.display = 'flex';
             document.querySelector('.content').style.display = 'flex';
+
+            // Sample Code and Image for R English - Shapefiles Info Section
+            if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
+                topicIntro.innerText = 'This section provides code to read and display shapefiles in R.';
+                codeDisplay.innerText = `# Load necessary libraries
+library(rgdal)
+library(ggplot2)
+
+# Load shapefile
+district_shapefile <- readOGR(dsn = "path/to/shapefiles", layer = "districts")
+
+# Basic plot to visualize the shapefile
+plot(district_shapefile)
+
+# Convert shapefile to dataframe for ggplot
+district_df <- fortify(district_shapefile)
+
+# Plot with ggplot
+ggplot(data = district_df, aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = "lightblue", color = "black") +
+  theme_minimal()`;
+                sampleImage.src = "https://example.com/sample_shapefile_plot.png";
+            }
         }
 
         function showOverviewPage() {
