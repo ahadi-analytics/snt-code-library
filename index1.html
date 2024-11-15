@@ -203,7 +203,7 @@
             if (currentSection && currentSection !== 'overview') {
                 currentLanguage = language;
                 previousLanguage = currentLanguage;
-                currentLanguage = button.innerText;
+               
                 updateURL();
                 updateContent();
                 document.querySelectorAll('.section-buttons button').forEach(button => button.classList.remove('active'));
