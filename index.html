@@ -212,14 +212,14 @@
         }
         function updateURL() {
             if (currentSection && currentSection !== 'overview' && currentLanguage) {
-                const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}&lang=${encodeURIComponent(currentLanguage)}`;
+                const newURL = `${window.location.origin}${window.location.pathname}?lang=${encodeURIComponent(currentLanguage)}&page=${encodeURIComponent(currentSection)}`;
                 window.history.pushState({}, '', newURL);
             } else if (currentSection && currentSection !== 'overview') {
-                const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}${currentLanguage ? `&lang=${encodeURIComponent(currentLanguage)}` : ''}`;
-                window.history.pushState({}, '', newURL);
+                 const newURL = `${window.location.origin}${window.location.pathname}?lang=${currentLanguage ? `${encodeURIComponent(currentLanguage)}&` : ''}page=${encodeURIComponent(currentSection)}`;
+                 window.history.pushState({}, '', newURL);
             } else if (currentSection === 'overview') {
-                const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
-                window.history.pushState({}, '', newURL);
+                 const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
+                 window.history.pushState({}, '', newURL);
             }
         }
         function updateContent() {
