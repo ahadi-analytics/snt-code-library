@@ -267,6 +267,28 @@
             document.querySelector('.sidebar').style.display = 'flex';
             document.querySelector('.content').style.display = 'flex';
 
+
+            document.querySelectorAll('.section-link').forEach(link => {
+              link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default navigation
+    
+                // Extract current language from URL
+                const currentUrl = window.location.href;
+                const urlParams = new URLSearchParams(window.location.search);
+                const currentLang = urlParams.get('lang');
+    
+                // Build new URL
+                let newUrl = link.getAttribute('href');
+                if (currentLang) {
+                  newUrl += `&lang=${encodeURIComponent(currentLang)}`;
+               }
+    
+              // Navigate to new URL
+            window.location.href = newUrl;
+       });
+    });
+
+
             // Sample Code and Image for R English - Shapefiles Info Section
             if (currentSection === 'shapefiles_info' && currentLanguage === 'R English') {
                 topicIntro.innerText = 'This section provides code to read and display shapefiles in R.';
