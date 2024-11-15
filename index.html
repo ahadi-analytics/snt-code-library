@@ -414,14 +414,21 @@ ggplot(data = gdf) +
     topicIntro.innerText = 'Administrative unit overlays involve displaying different levels of administrative boundaries on maps, such as country, province, and district boundaries. These overlays help to provide context to spatial analysis';
     codeDisplay.innerText = `
 
+#***********************************************************************************************************************************************
 # Step 1: Install necessary libraries
 install.packages("sf")       # Install 'sf' for spatial data handling
 install.packages("ggplot2")  # Install 'ggplot2' for advanced plotting
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 2: Import necessary libraries
 library(sf)       # Load 'sf' package for geospatial data manipulation
 library(ggplot2)  # Load 'ggplot2' for plotting
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 3: Define URLs to shapefile components for adm1 and adm3
 adm1_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM1.shp'
 adm1_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM1.shx'
@@ -430,8 +437,11 @@ adm1_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-C
 adm3_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.shp'
 adm3_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.shx'
 adm3_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/b319b4afc5168a33cfe1173a1ea0de7094e9593f/geoBoundaries-BFA-ADM3.dbf'
+#***********************************************************************************************************************************************
 
-# Step 3.1: Download the shapefile components locally for adm1 and adm3
+
+#***********************************************************************************************************************************************
+# Step 4: Download the shapefile components locally for adm1 and adm3
 # Download adm1 shapefile components
 download.file(adm1_shapefile_path, destfile = "geoBoundaries_BFA_ADM1.shp", mode = "wb")
 download.file(adm1_shapefile_shx, destfile = "geoBoundaries_BFA_ADM1.shx", mode = "wb")
@@ -441,18 +451,27 @@ download.file(adm1_shapefile_dbf, destfile = "geoBoundaries_BFA_ADM1.dbf", mode 
 download.file(adm3_shapefile_path, destfile = "geoBoundaries_BFA_ADM3.shp", mode = "wb")
 download.file(adm3_shapefile_shx, destfile = "geoBoundaries_BFA_ADM3.shx", mode = "wb")
 download.file(adm3_shapefile_dbf, destfile = "geoBoundaries_BFA_ADM3.dbf", mode = "wb")
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 4: Load shapefiles into sf objects
 adm1 <- st_read("geoBoundaries_BFA_ADM1.shp")   # Reads administrative level 1 shapefile
 adm3 <- st_read("geoBoundaries_BFA_ADM3.shp")   # Reads administrative level 3 shapefile
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
 st_crs(adm1) <- 4326  # Set CRS to WGS84 for adm1
 st_crs(adm3) <- 4326  # Set CRS to WGS84 for adm3
 
 # Explanation:
 # - It is crucial to make sure both spatial layers have the same CRS to overlay them accurately.
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 6: Plot the adm1 and adm3 layers together using ggplot2
 ggplot() +
   geom_sf(data = adm1, fill = NA, color = "#47B5FF", lwd = 1.8) +  # Plot adm1 boundaries in lightblue
@@ -476,48 +495,73 @@ ggplot() +
     topicIntro.innerText = 'Merging a shapefile with Excel involves combining spatial data with attribute data from a spreadsheet. This enriches the spatial data with additional non-spatial attributes, making the visualization more informative';
     codeDisplay.innerText = `
 
+#***********************************************************************************************************************************************
 # Step 1: Install necessary libraries
 install.packages("sf")          # Install 'sf' for spatial data handling
 install.packages("readxl")      # Install 'readxl' for reading Excel files
 install.packages("dplyr")       # Install 'dplyr' for data manipulation
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 2: Import necessary libraries
 library(sf)          # Load 'sf' package for geospatial data manipulation
 library(readxl)      # Load 'readxl' package for reading Excel files
 library(dplyr)       # Load 'dplyr' for data manipulation
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 3: Define URLs to shapefile components for 'Chiefdom 2021'
 chiefdom_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
 chiefdom_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
 chiefdom_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
+#***********************************************************************************************************************************************
 
-# Step 3.1: Download the shapefile components locally for 'Chiefdom 2021'
+
+#***********************************************************************************************************************************************
+# Step 4: Download the shapefile components locally for 'Chiefdom 2021'
 download.file(chiefdom_shapefile_path, destfile = "Chiefdom_2021.shp", mode = "wb")
 download.file(chiefdom_shapefile_shx, destfile = "Chiefdom_2021.shx", mode = "wb")
 download.file(chiefdom_shapefile_dbf, destfile = "Chiefdom_2021.dbf", mode = "wb")
-
-# Step 4: Load the shapefile into an sf object
+#***********************************************************************************************************************************************
+# Step 5: Load the shapefile into an sf object
 adm3 <- st_read("Chiefdom_2021.shp")
+#***********************************************************************************************************************************************
 
-# Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
+
+#***********************************************************************************************************************************************
+# Step 6: Set the Coordinate Reference System (CRS) to ensure consistency
 st_crs(adm3) <- 4326  # Set CRS to WGS84
+#***********************************************************************************************************************************************
 
-# Step 6: Read the Excel file that contains additional attribute data
+
+#***********************************************************************************************************************************************
+# Step 7: Read the Excel file that contains additional attribute data
 # Define the raw URL for the Excel file
 excel_file_url <- "https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/0912c6f41ef3256396c145781450286a91147554/Chiefdom_data.xlsx"
+#***********************************************************************************************************************************************
 
-# Step 6.1: Download the Excel file to the local directory
+
+#***********************************************************************************************************************************************
+# Step 8: Download the Excel file to the local directory
 download.file(excel_file_url, destfile = "Chiefdom_data.xlsx", mode = "wb")
+#***********************************************************************************************************************************************
 
-# Step 6.2: Load Excel data into R
+
+#***********************************************************************************************************************************************
+# Step 9: Load Excel data into R
 excel_data <- read_excel("Chiefdom_data.xlsx")
 
 # Explanation:
 # - 'download.file()' downloads the Excel file from the raw GitHub URL and saves it locally.
 # - 'read_excel()' reads the downloaded Excel file into an R data frame.
 # - Ensure the Excel data has a common key column (e.g., 'adm3_id') to merge with the shapefile.
+#***********************************************************************************************************************************************
 
-# Step 7: Perform the merge operation and validate 1:1 relationship
+
+#***********************************************************************************************************************************************
+# Step 10: Perform the merge operation and validate 1:1 relationship
 # Ensure that both adm3 and excel_data have a common column named 'adm3_id'
 merged_data <- merge(adm3, excel_data, by = "FIRST_CHIE", all = FALSE)
 
@@ -551,6 +595,7 @@ print(merged_data)
     topicIntro.innerText = 'Mapping by numeric variables allows for visualizing quantitative attributes across geographic regions. Different color intensities are typically used to represent the magnitude of numeric values ';
     codeDisplay.innerText = `
 
+#***********************************************************************************************************************************************
 # Step 1: Install necessary packages (if not installed)
 install.packages("sf")          # Install 'sf' for spatial data handling
 install.packages("readxl")      # Install 'readxl' for reading Excel files
@@ -558,56 +603,88 @@ install.packages("dplyr")       # Install 'dplyr' for data manipulation
 install.packages("ggplot2")     # Install 'ggplot2' for plotting maps and visualizations
 install.packages("viridis")     # Install 'viridis' for color palettes
 install.packages("RColorBrewer")# Install 'RColorBrewer' for color palettes
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 2: Load the necessary libraries
 library(sf)          # Load 'sf' package to work with spatial data
 library(readxl)      # Load 'readxl' package to read Excel files
 library(dplyr)       # Load 'dplyr' package to manipulate data
 library(ggplot2)     # Load 'ggplot2' package to plot spatial data
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 3: Define URLs to download shapefile components for 'Chiefdom 2021'
 chiefdom_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
 chiefdom_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
 chiefdom_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
+#***********************************************************************************************************************************************
 
-# Step 3.1: Download the shapefile components locally for 'Chiefdom 2021'
+
+#***********************************************************************************************************************************************
+# Step 4: Download the shapefile components locally for 'Chiefdom 2021'
 download.file(chiefdom_shapefile_path, destfile = "Chiefdom_2021.shp", mode = "wb")
 download.file(chiefdom_shapefile_shx, destfile = "Chiefdom_2021.shx", mode = "wb")
 download.file(chiefdom_shapefile_dbf, destfile = "Chiefdom_2021.dbf", mode = "wb")
+#***********************************************************************************************************************************************
 
-# Step 4: Load the shapefile into an sf object
+
+#***********************************************************************************************************************************************
+# Step 5: Load the shapefile into an sf object
 adm3 <- st_read("Chiefdom_2021.shp")
+#***********************************************************************************************************************************************
 
-# Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
+
+#***********************************************************************************************************************************************
+# Step 6: Set the Coordinate Reference System (CRS) to ensure consistency
 st_crs(adm3) <- 4326  # Set CRS to WGS84 (latitude/longitude)
-
+#***********************************************************************************************************************************************
 # Step 6: Read the Excel file that contains additional attribute data
 # Define the raw URL for the Excel file
 excel_file_url <- "https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/d48b5acb7e4e79a6b4c929e9fa11a4335a47a389/Chiefdom_data1.xlsx"
+#***********************************************************************************************************************************************
 
 
-# Step 6.1: Download the Excel file to the local directory
+#***********************************************************************************************************************************************
+# Step 7: Download the Excel file to the local directory
 download.file(excel_file_url, destfile = "Chiefdom_data.xlsx", mode = "wb")
+#***********************************************************************************************************************************************
 
-# Step 6.2: Load Excel data into R
+
+#***********************************************************************************************************************************************
+# Step 8: Load Excel data into R
 excel_data <- read_excel("Chiefdom_data.xlsx")
+#***********************************************************************************************************************************************
 
-# Step 7: Merge the shapefile and Excel data by a common key column ('adm3_id')
+
+#***********************************************************************************************************************************************
+# Step 9: Merge the shapefile and Excel data by a common key column ('adm3_id')
 # Ensure that both adm3 and excel_data have a common column named 'adm3_id'
 merged_data <- merge(adm3, excel_data, by = "FIRST_CHIE", all = FALSE)
+#***********************************************************************************************************************************************
 
-# Step 8: Validate 1:1 Merge
+
+#***********************************************************************************************************************************************
+# Step 10: Validate 1:1 Merge
 # Identify rows that did not merge (in both adm3 and excel_data)
 unmatched_adm3 <- anti_join(adm3, excel_data, by = "FIRST_CHIE")  # Rows in 'adm3' not in 'excel_data'
 unmatched_excel <- anti_join(excel_data, adm3, by = "FIRST_CHIE") # Rows in 'excel_data' not in 'adm3'
+#***********************************************************************************************************************************************
 
-# Step 8.1: Print the non-matching rows to check if any discrepancies exist
+
+#***********************************************************************************************************************************************
+# Step 11: Print the non-matching rows to check if any discrepancies exist
 print("Rows in the shapefile (adm3) that did not merge:")
 print(unmatched_adm3)
 
 print("Rows in the Excel data that did not merge:")
 print(unmatched_excel)
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 9: Categorize the 'Testing rate' column in the merged dataset
 # Create a new column 'Testing_rate_category' based on defined ranges
 merged_data <- merged_data %>%
@@ -616,7 +693,10 @@ merged_data <- merged_data %>%
     breaks = c(-Inf, 20, 40, 60, 80, 100),  # Define the breakpoints for categories
     labels = c("<20", "20-40", "41-60", "61-80", "81-100")  # Labels for each category
   ))
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 10: Plot the map using ggplot2
 ggplot(data = merged_data) +
   geom_sf(aes(fill = Testing_rate), color = "black", lwd = 0.5) +  # Fill regions based on Testing_rate_category
@@ -635,51 +715,82 @@ ggplot(data = merged_data) +
     topicIntro.innerText = 'Mapping by categorical variables uses different colors or symbols to represent various classes or categories within the dataset. This type of map is useful for visualizing classifications.';
     codeDisplay.innerText = `
 
+#***********************************************************************************************************************************************
 # Step 1: Install necessary packages (if not installed)
 install.packages("sf")          # Install 'sf' for spatial data handling
 install.packages("readxl")      # Install 'readxl' for reading Excel files
 install.packages("dplyr")       # Install 'dplyr' for data manipulation
 install.packages("ggplot2")     # Install 'ggplot2' for plotting maps
 install.packages("RColorBrewer")# Install 'RColorBrewer' for color palettes
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 2: Load the necessary libraries
 library(sf)          # Load 'sf' package to work with spatial data
 library(readxl)      # Load 'readxl' package to read Excel files
 library(dplyr)       # Load 'dplyr' package to manipulate data
 library(ggplot2)     # Load 'ggplot2' package to plot spatial data
 library(RColorBrewer)# Load 'RColorBrewer' package for enhanced color palettes
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 3: Define URLs to download shapefile components for 'Chiefdom 2021'
 chiefdom_shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
 chiefdom_shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
 chiefdom_shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
+#***********************************************************************************************************************************************
 
-# Step 3.1: Download the shapefile components locally for 'Chiefdom 2021'
+
+#***********************************************************************************************************************************************
+# Step 4: Download the shapefile components locally for 'Chiefdom 2021'
 download.file(chiefdom_shapefile_path, destfile = "Chiefdom_2021.shp", mode = "wb")
 download.file(chiefdom_shapefile_shx, destfile = "Chiefdom_2021.shx", mode = "wb")
 download.file(chiefdom_shapefile_dbf, destfile = "Chiefdom_2021.dbf", mode = "wb")
+#***********************************************************************************************************************************************
 
-# Step 4: Load the shapefile into an sf object
+
+#***********************************************************************************************************************************************
+# Step 5: Load the shapefile into an sf object
 adm3 <- st_read("Chiefdom_2021.shp")
+#***********************************************************************************************************************************************
 
-# Step 5: Set the Coordinate Reference System (CRS) to ensure consistency
+
+#***********************************************************************************************************************************************
+# Step 6: Set the Coordinate Reference System (CRS) to ensure consistency
 st_crs(adm3) <- 4326  # Set CRS to WGS84 (latitude/longitude)
+#***********************************************************************************************************************************************
 
-# Step 6: Read the Excel file that contains additional attribute data
+
+#***********************************************************************************************************************************************
+# Step 7: Read the Excel file that contains additional attribute data
 # Define the raw URL for the Excel file
 excel_file_url <- "https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/d48b5acb7e4e79a6b4c929e9fa11a4335a47a389/Chiefdom_data1.xlsx"
+#***********************************************************************************************************************************************
 
-# Step 6.1: Download the Excel file to the local directory
+
+#***********************************************************************************************************************************************
+# Step 8: Download the Excel file to the local directory
 download.file(excel_file_url, destfile = "Chiefdom_data1.xlsx", mode = "wb")
+#***********************************************************************************************************************************************
 
-# Step 6.2: Load Excel data into R
+
+#***********************************************************************************************************************************************
+# Step 9: Load Excel data into R
 excel_data <- read_excel("Chiefdom_data1.xlsx")
+#***********************************************************************************************************************************************
 
-# Step 7: Merge the shapefile and Excel data by a common key column ('adm3_id')
+
+#***********************************************************************************************************************************************
+# Step 10: Merge the shapefile and Excel data by a common key column ('adm3_id')
 # Ensure that both adm3 and excel_data have a common column named 'adm3_id'
 merged_data <- merge(adm3, excel_data, by = "FIRST_CHIE", all = FALSE)
+#***********************************************************************************************************************************************
 
-# Step 8: Plot the map using ggplot2 with RColorBrewer Set3 palette for the categorical column IRS
+
+#***********************************************************************************************************************************************
+# Step 11: Plot the map using ggplot2 with RColorBrewer Set3 palette for the categorical column IRS
 ggplot(data = merged_data) +
   geom_sf(aes(fill = IRS), color = "black", size = 1.2, linetype = "solid") +  # Fill regions based on IRS column, add thicker borders for separation
   scale_fill_brewer(
