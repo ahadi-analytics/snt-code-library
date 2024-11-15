@@ -242,7 +242,7 @@
             }
 
             if (!currentLanguage && currentSection !== 'overview') {
-                currentLanguage = currentLanguage || 'R English'; // Use previously selected language or default to 'R English'
+                currentLanguage = currentLanguage || previousLanguage; // Use previously selected language or the current language selected'
             }
 
             document.querySelector('.overview').style.display = 'none';
