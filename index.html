@@ -304,24 +304,36 @@ print(gdf)
     topicIntro.innerText = 'Basic map plotting involves visualizing geographic data to understand spatial patterns';
     codeDisplay.innerText = `
 
+
+#***********************************************************************************************************************************************
 # Step 1: Install necessary libraries
 install.packages("sf") # Installs the 'sf' library to handle spatial data
 install.packages("ggplot2") # Installs the 'ggplot2' library for data visualization
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 2: Import the necessary libraries
 library(sf) # Loads the 'sf' package, which is used to work with geospatial data in R
 library(ggplot2) # Loads the 'ggplot2' package for advanced plotting
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 3: Define the path to the shapefile components on GitHub
 shapefile_shx <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shx'
 shapefile_dbf <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.dbf'
 shapefile_path <- 'https://raw.githubusercontent.com/mohamedsillahkanu/SNT-Code-Library/a43027a9454581dd57aec9244e33378da723d38e/Chiefdom%202021.shp'
 
+
 # Explanation:
 # - These variables hold the URLs to the raw shapefile components (shp, shx, and dbf files) in the GitHub repository.
 # - A shapefile consists of multiple files, so all components must be downloaded.
+#***********************************************************************************************************************************************
 
-# Step 3.1: Download the shapefile components locally
+
+#***********************************************************************************************************************************************
+# Step 4: Download the shapefile components locally
 download.file(shapefile_path, destfile = "Chiefdom_2021.shp")
 download.file(shapefile_shx, destfile = "Chiefdom_2021.shx")
 download.file(shapefile_dbf, destfile = "Chiefdom_2021.dbf")
@@ -329,21 +341,31 @@ download.file(shapefile_dbf, destfile = "Chiefdom_2021.dbf")
 # Explanation:
 # - 'download.file()' downloads each of the shapefile components and saves them locally.
 # - This ensures that the entire shapefile (which includes geometry, attributes, and index) is available for analysis.
+#***********************************************************************************************************************************************
 
-# Step 4: Load the shapefile into an sf object
+
+#***********************************************************************************************************************************************
+# Step 5: Load the shapefile into an sf object
 gdf <- st_read("Chiefdom_2021.shp")
 
 # Explanation:
 # - 'st_read()' reads the shapefile into an 'sf' object (gdf).
 # - The 'sf' object contains both the spatial features (geometry) and attributes of the shapefile.
+#***********************************************************************************************************************************************
 
-# Step 4.1: Set the Coordinate Reference System (CRS)
+
+#***********************************************************************************************************************************************
+# Step 6: Set the Coordinate Reference System (CRS)
 st_crs(gdf) <- 4326
+
 
 # Explanation:
 # - 'st_crs() <- 4326' assigns the coordinate reference system (CRS) to the sf object.
 # - EPSG 4326 represents latitude and longitude, commonly used for geographic data.
+#***********************************************************************************************************************************************
 
+
+#***********************************************************************************************************************************************
 # Step 5: Plot the shapefile using ggplot2 for enhanced visualization, with customization
 ggplot(data = gdf) +
   geom_sf() +
@@ -365,6 +387,7 @@ ggplot(data = gdf) +
 #   - 'axis.ticks = element_blank()' removes the axis ticks.
 #   - 'plot.title = element_text(hjust = 0.5)' centers the title by setting 'hjust' to 0.5 (horizontal justification).
 #   - 'size = 16' adjusts the size of the title text to make it more readable.`;
+
                 
     sampleImage.src = 'https://raw.githubusercontent.com/numalariamodeling/snt-code-library-english-version/bf20a81887a57cedf3f9b13245a3122e8594060a/map%20of%20sl.png';
 } else if (currentSection === 'admin_units' && currentLanguage === 'R English') {
