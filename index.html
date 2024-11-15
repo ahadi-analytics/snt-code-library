@@ -214,13 +214,28 @@
             if (currentSection && currentSection !== 'overview' && currentLanguage) {
                 const newURL = `${window.location.origin}${window.location.pathname}?lang=${encodeURIComponent(currentLanguage)}&page=${encodeURIComponent(currentSection)}`;
                 window.history.pushState({}, '', newURL);
+
             } else if (currentSection && currentSection !== 'overview') {
                  const newURL = `${window.location.origin}${window.location.pathname}?lang=${currentLanguage ? `${encodeURIComponent(currentLanguage)}&` : ''}page=${encodeURIComponent(currentSection)}`;
                  window.history.pushState({}, '', newURL);
+
+
+            
             } else if (currentSection === 'overview') {
                  const newURL = `${window.location.origin}${window.location.pathname}?page=overview`;
                  window.history.pushState({}, '', newURL);
+
+                
+            } else if (currentSection && currentSection !== 'overview' && currentLanguage) {
+                 const newURL = `${window.location.origin}${window.location.pathname}?lang=${encodeURIComponent(currentLanguage)}&page=${encodeURIComponent(currentSection)}`;
+                 window.history.pushState({}, '', newURL);
+
+                
+            } else if (currentSection && currentSection !== 'overview' && !currentLanguage) {
+                 const newURL = `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(currentSection)}`;
+                 window.history.pushState({}, '', newURL);
             }
+                
         }
         function updateContent() {
             const topicIntro = document.querySelector('.topic-intro');
