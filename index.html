@@ -59,6 +59,16 @@
             margin-bottom: 50px;
             font-size: 16px;
             padding: 10px;
+            background-color: #474761;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sidebar button:hover {
+            background-color: #87CEEB;
+            color: #000000;
         }
         .sidebar ul {
             list-style: none;
@@ -70,10 +80,14 @@
             cursor: pointer;
             position: relative;
             user-select: none;
+            transition: background-color 0.3s;
         }
         .sidebar li.active {
             background-color: #87CEEB;
             color: #000000;
+        }
+        .sidebar li:hover {
+            background-color: #474761;
         }
         .dropdown-content {
             display: none;
@@ -107,6 +121,10 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+        }
+        .section-buttons button:hover {
+            background-color: #87CEEB;
+            color: #000000;
         }
         .section-buttons button.active {
             background-color: #87CEEB;
@@ -166,6 +184,11 @@
             position: absolute;
             top: 30px;
             right: 10px;
+            transition: background-color 0.3s;
+        }
+        .custom-button:hover {
+            background-color: #ffffff;
+            color: #87CEEB;
         }
         .copy-button {
             position: absolute;
@@ -178,11 +201,17 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .copy-button:hover {
+            background-color: #ffffff;
+            color: #87CEEB;
         }
     </style>
     <script>
         let currentSection = '';
         let currentLanguage = '';
+        let previousLanguage = '';
 
         document.addEventListener("DOMContentLoaded", function () {
             const sectionButtons = document.querySelectorAll('.section-buttons button');
@@ -190,6 +219,7 @@
 
             sectionButtons.forEach(button => {
                 button.addEventListener('click', () => {
+                    previousLanguage = currentLanguage;
                     currentLanguage = button.innerText;
                     updateURL();
                     updateContent();
@@ -214,7 +244,7 @@
             document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
             item.classList.add('active');
             currentSection = section;
-            currentLanguage = '';
+            currentLanguage = previousLanguage;
             updateURL();
             updateContent();
         }
@@ -245,9 +275,8 @@
                 return;
             }
 
-            if (!currentLanguage) {
-                topicIntro.innerText = 'Select a section on the sidebar to display sample code and output';
-                return;
+            if (!currentLanguage && currentSection !== 'overview') {
+                currentLanguage = previousLanguage || currentLanguage;
             }
 
             document.querySelector('.overview').style.display = 'none';
